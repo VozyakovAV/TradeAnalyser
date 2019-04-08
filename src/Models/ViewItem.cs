@@ -6,15 +6,23 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TradeAnalyser
 {
-    public class ChartData : INotifyPropertyChanged
+    public class ViewItem : INotifyPropertyChanged
     {
-        public ObservableCollection<ChartItem> Items { get; protected set; }
         public ObservableCollection<string> Columns { get; protected set; }
-        public double MaximimX { get { return Items == null ? 0 : Items.Max(x => x.X); } }
-        public double MinimumX { get { return Items == null ? 0 : Items.Min(x => x.X); } }
+        public ChartData ChartData { get; protected set; }
+        public HeatMapData HeatMapData { get; protected set; }
+        public bool IsChartVisible { get; protected set; }
+        public bool IsHeatMapVisible { get; protected set; }
+
+        public ViewItem()
+        {
+            this.ChartData = new ChartData();
+            this.HeatMapData = new HeatMapData();
+        }
 
         // ---------------------------
 
@@ -26,6 +34,7 @@ namespace TradeAnalyser
             {
                 _dataTable = value;
                 var columns = _dataTable.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
+                columns.Insert(0, string.Empty);
                 Columns = new ObservableCollection<string>(columns);
                 Update();
             }
@@ -83,32 +92,27 @@ namespace TradeAnalyser
 
         private void Update()
         {
-            if (SelectedX != null && SelectedY != null)
+            IsChartVisible = false;
+            IsHeatMapVisible = false;
+
+            if (!string.IsNullOrEmpty(SelectedX) && !string.IsNullOrEmpty(SelectedY))
             {
-                var chartItems = new List<ChartItem>();
-
-                foreach (DataRow row in DataTable.Rows)
+                if (string.IsNullOrEmpty(SelectedZ))
                 {
-                    var x = (double)row[SelectedX];
-                    var y = (double)row[SelectedY];
-                    chartItems.Add(new ChartItem(x, y));
+                    ChartData.Update(DataTable, SelectedX, SelectedY);
+                    IsChartVisible = true;
                 }
-
-                chartItems = chartItems.OrderBy(x => x.X).ToList();
-                var groups = chartItems.GroupBy(x => x.X).ToList();
-                var chartItems2 = groups.Select(x => new ChartItem(x.Key, x.ToList().Average(y => y.Y))).ToList();
-
-                Items = new ObservableCollection<ChartItem>(chartItems2);
+                else
+                {
+                    HeatMapData.Update(DataTable, SelectedX, SelectedY, SelectedZ);
+                    IsHeatMapVisible = true;
+                }
             }
 
-            OnPropertyChanged("Items");
-            OnPropertyChanged("Columns");
-            OnPropertyChanged("MaximimX");
-            OnPropertyChanged("MinimumX");
-            OnPropertyChanged("DataTable");
-            OnPropertyChanged("SelectedX");
-            OnPropertyChanged("SelectedY");
-            OnPropertyChanged("SelectedZ");
+            OnPropertyChanged("ChartData");
+            OnPropertyChanged("HeatMapData");
+            OnPropertyChanged("IsChartVisible");
+            OnPropertyChanged("IsHeatMapVisible");
         }
     }
 }

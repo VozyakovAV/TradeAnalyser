@@ -36,14 +36,14 @@ namespace TradeAnalyser
 
         // ---------------------------
 
-        private ChartData _chartData1;
-        public ChartData ChartData1
+        private ViewItem _viewItem;
+        public ViewItem ViewItem
         {
-            get { return _chartData1; }
+            get { return _viewItem; }
             set
             {
-                _chartData1 = value;
-                OnPropertyChanged("ChartData1");
+                _viewItem = value;
+                OnPropertyChanged("ViewItem");
             }
         }
 

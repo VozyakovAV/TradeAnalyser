@@ -32,7 +32,7 @@ namespace TradeAnalyser
             this.DataContext = State;
 
 #if DEBUG
-            LoadFile(@"D:\Data\Дела\Алго\TSLab\ТИ2_А3\Eдлин.csv");
+            LoadFile(@"D:\Temp\TsLab\1\3.csv");
 #endif
         }
 
@@ -43,8 +43,7 @@ namespace TradeAnalyser
 
             if (dlg.ShowDialog(this) == true)
             {
-                State.FilePath = dlg.FileName;
-                LoadFile(State.FilePath);
+                LoadFile(dlg.FileName);
             }
         }
 
@@ -52,9 +51,10 @@ namespace TradeAnalyser
         {
             if (File.Exists(file))
             {
+                State.FilePath = file;
                 State.DataTable = ParseFileData.Parse(file);
 
-                State.ChartData1 = new ChartData()
+                State.ViewItem = new ViewItem()
                 {
                     DataTable = State.DataTable
                 };
