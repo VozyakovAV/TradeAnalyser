@@ -50,8 +50,8 @@
                                      Language=""/>
             </TabItem>
 
-            <TabItem x:Name="viewItem" Header="График" IsSelected="True" DataContext="{Binding Path=ViewItem}">
-                <Grid>
+            <TabItem Header="График" IsSelected="True">
+                <Grid x:Name="viewItem" DataContext="{Binding Path=ViewItem}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />

@@ -36,6 +36,13 @@ namespace TradeAnalyser
                 var columns = _dataTable.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToList();
                 columns.Insert(0, string.Empty);
                 Columns = new ObservableCollection<string>(columns);
+#if DEBUG
+                if (columns.Count > 2)
+                {
+                    SelectedX = columns[1];
+                    SelectedY = columns[2];
+                }
+#endif
                 Update();
             }
         }
