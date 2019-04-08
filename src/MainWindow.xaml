@@ -1,0 +1,107 @@
+﻿<Window x:Class="TradeAnalyser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TradeAnalyser"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+        mc:Ignorable="d"
+        Title="Trade analyzer" MinHeight="450" MinWidth="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" 
+                Padding="4" 
+                BorderThickness="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Border Padding="4"
+                        Margin="0 0 4 0"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1">
+                    <TextBlock Text="{Binding FilePath}"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               MaxWidth="500"/>
+                </Border>
+                <Button Grid.Column="1" 
+                        Click="SelectFolderClick">
+                    <TextBlock Margin="30 4 30 4" 
+                               Text="Открыть" />
+                </Button>
+            </Grid>
+        </Border>
+
+        <TabControl Grid.Row="1">
+            <TabItem Header="Таблица" >
+                <telerik:RadGridView ItemsSource="{Binding Path=DataTable}" 
+                                     AutoGenerateColumns="True"
+                                     IsReadOnly="True"
+                                     Language=""/>
+            </TabItem>
+
+            <TabItem Header="График" IsSelected="True">
+                <Grid DataContext="{Binding Path=ChartData1}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" MinWidth="300" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Column="0" Grid.Row="0">X:</Label>
+                        <Label Grid.Column="0" Grid.Row="1">Y:</Label>
+                        <Label Grid.Column="0" Grid.Row="2">Z:</Label>
+
+                        <ComboBox Grid.Column="1" Grid.Row="0" Margin="2" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding Path=Columns}"
+                                  SelectedItem="{Binding Path=SelectedX, Mode=TwoWay}" />
+                        <ComboBox Grid.Column="1" Grid.Row="1" Margin="2" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding Path=Columns}"
+                                  SelectedItem="{Binding Path=SelectedY, Mode=TwoWay}" />
+                        <ComboBox Grid.Column="1" Grid.Row="2" Margin="2" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding Path=Columns}"
+                                  SelectedItem="{Binding Path=SelectedZ, Mode=TwoWay}" />
+                    </Grid>
+
+                    <telerik:RadCartesianChart Grid.Row="1">
+                        <telerik:RadCartesianChart.Behaviors>
+                            <telerik:ChartTrackBallBehavior />
+                        </telerik:RadCartesianChart.Behaviors>
+                        <telerik:RadCartesianChart.HorizontalAxis>
+                            <telerik:LinearAxis Maximum="{Binding Path=MaximimX}"
+                                            Minimum="{Binding Path=MinimumX}"/>
+                        </telerik:RadCartesianChart.HorizontalAxis>
+                        <telerik:RadCartesianChart.VerticalAxis>
+                            <telerik:LinearAxis />
+                        </telerik:RadCartesianChart.VerticalAxis>
+                        <telerik:RadCartesianChart.Series>
+                            <telerik:ScatterLineSeries ItemsSource="{Binding Path=Items}" YValueBinding="Y" XValueBinding="X" />
+                        </telerik:RadCartesianChart.Series>
+                    </telerik:RadCartesianChart>
+                </Grid>
+                
+            </TabItem>
+
+        </TabControl>
+        
+    </Grid>
+</Window>
+
+    

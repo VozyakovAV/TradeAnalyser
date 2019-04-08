@@ -1,0 +1,10 @@
+[Pp]ackages
+[Dd]ebug
+[Rr]elease
+[Bb]in
+[Oo]bj
+.vs
+*.suo
+*.user
+*.result.txt
+src/Other/result
