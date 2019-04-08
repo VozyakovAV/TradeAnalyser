@@ -54,11 +54,12 @@ namespace TradeAnalyser
                 State.FilePath = file;
                 State.DataTable = ParseFileData.Parse(file);
 
-                State.ViewItem = new ViewItem()
-                {
-                    DataTable = State.DataTable
-                };
-
+                var items = new List<ViewItem>();
+                items.Add(new ViewItem() { DataTable = State.DataTable });
+                items.Add(new ViewItem() { DataTable = State.DataTable });
+                items.Add(new ViewItem() { DataTable = State.DataTable });
+                items.Add(new ViewItem() { DataTable = State.DataTable });
+                State.Items = items;
             }
         }
     }

@@ -36,14 +36,14 @@ namespace TradeAnalyser
 
         // ---------------------------
 
-        private ViewItem _viewItem;
-        public ViewItem ViewItem
+        private IList<ViewItem> _items;
+        public IList<ViewItem> Items
         {
-            get { return _viewItem; }
+            get { return _items; }
             set
             {
-                _viewItem = value;
-                OnPropertyChanged("ViewItem");
+                _items = value;
+                OnPropertyChanged("Items");
             }
         }
 
