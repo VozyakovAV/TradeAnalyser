@@ -73,7 +73,9 @@ namespace TradeAnalyser
 
         private static double ParseDouble(string value)
         {
-            return double.Parse(value, CultureInfo.InvariantCulture);
+            double d = 0;
+            double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out d);
+            return d;
         }
 
         private static bool IsDouble(string value)
