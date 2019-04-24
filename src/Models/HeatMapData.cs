@@ -24,11 +24,11 @@ namespace TradeAnalyser
             }
         }
 
-        public void Update(DataTable dataTable, string columnX, string columnY, string columnZ)
+        public void Update(IEnumerable<DataRow> rows, string columnX, string columnY, string columnZ)
         {
             var items = new List<HeatMapItem>();
 
-            foreach (DataRow row in dataTable.Rows)
+            foreach (DataRow row in rows)
             {
                 var x = (double)row[columnX];
                 var y = (double)row[columnY];

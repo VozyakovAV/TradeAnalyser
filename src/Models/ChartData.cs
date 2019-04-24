@@ -14,6 +14,8 @@ namespace TradeAnalyser
         public ObservableCollection<ChartItem> Items { get; protected set; }
         public double MaximimX { get { return Items == null ? 0 : Items.Max(x => x.X); } }
         public double MinimumX { get { return Items == null ? 0 : Items.Min(x => x.X); } }
+        public double MaximimY { get { return Items == null ? 0 : Items.Max(x => x.Y); } }
+        public double MinimumY { get { return Items == null ? 0 : Items.Min(x => x.Y); } }
 
         // ---------------------------
 
@@ -26,11 +28,11 @@ namespace TradeAnalyser
             }
         }
 
-        public void Update(DataTable dataTable, string columnX, string columnY)
+        public void Update(IEnumerable<DataRow> rows, string columnX, string columnY)
         {
             var items = new List<ChartItem>();
 
-            foreach (DataRow row in dataTable.Rows)
+            foreach (DataRow row in rows)
             {
                 var x = (double)row[columnX];
                 var y = (double)row[columnY];
@@ -46,6 +48,8 @@ namespace TradeAnalyser
             OnPropertyChanged("Items");
             OnPropertyChanged("MaximimX");
             OnPropertyChanged("MinimumX");
+            OnPropertyChanged("MaximimY");
+            OnPropertyChanged("MinimumY");
         }
     }
 }

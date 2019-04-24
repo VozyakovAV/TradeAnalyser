@@ -54,7 +54,7 @@
                 <ItemsControl ItemsSource="{Binding Items}" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <UniformGrid IsItemsHost="True" />
+                            <UniformGrid IsItemsHost="True"  />
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
