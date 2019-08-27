@@ -42,10 +42,13 @@ namespace TradeAnalyser
                 columns.Insert(0, string.Empty);
                 Columns = new ObservableCollection<string>(columns);
 #if DEBUG
-                if (columns.Count > 2)
+                var columnX = columns.FirstOrDefault(x => x.Contains("BarsExit"));
+                var columnY = columns.FirstOrDefault(x => x.Contains("Средний П/У в %"));
+
+                if (columnX != null && columnY != null)
                 {
-                    SelectedX = columns[1];
-                    SelectedY = columns[2];
+                    SelectedX = columnX;
+                    SelectedY = columnY;
                 }
 #endif
                 Update();

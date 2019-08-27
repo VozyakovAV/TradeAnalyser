@@ -17,6 +17,10 @@ namespace TradeAnalyser
         public double MaximimY { get { return Items == null ? 0 : Items.Max(x => x.Y); } }
         public double MinimumY { get { return Items == null ? 0 : Items.Min(x => x.Y); } }
 
+        public double Min { get { return Items == null ? 0 : Items.Min(x => x.Y); } }
+        public double Max { get { return Items == null ? 0 : Items.Max(x => x.Y); } }
+        public double Avg { get { return Items == null ? 0 : Items.Average(x => x.Y); } }
+
         // ---------------------------
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,6 +54,9 @@ namespace TradeAnalyser
             OnPropertyChanged("MinimumX");
             OnPropertyChanged("MaximimY");
             OnPropertyChanged("MinimumY");
+            OnPropertyChanged("Min");
+            OnPropertyChanged("Max");
+            OnPropertyChanged("Avg");
         }
     }
 }

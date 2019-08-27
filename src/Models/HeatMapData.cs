@@ -13,6 +13,10 @@ namespace TradeAnalyser
     {
         public ObservableCollection<HeatMapItem> Items { get; set; }
 
+        public double Min { get { return Items == null ? 0 : Items.Min(x => x.Z); } }
+        public double Max { get { return Items == null ? 0 : Items.Max(x => x.Z); } }
+        public double Avg { get { return Items == null ? 0 : Items.Average(x => x.Z); } }
+
         // ---------------------------
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,6 +52,9 @@ namespace TradeAnalyser
             Items = new ObservableCollection<HeatMapItem>(items2);
 
             OnPropertyChanged("Items");
+            OnPropertyChanged("Min");
+            OnPropertyChanged("Max");
+            OnPropertyChanged("Avg");
         }
     }
 }
